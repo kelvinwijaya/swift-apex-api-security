@@ -29,6 +29,14 @@
 
 /* Begin PBXFileReference section */
 		1A09F01520DA2B1000624908 /* certificates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = certificates; sourceTree = "<group>"; };
+		1A3B666021B9547900CE1A8C /* CommonHMAC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonHMAC.h; sourceTree = "<group>"; };
+		1A3B666121B9547900CE1A8C /* CommonSymmetricKeywrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonSymmetricKeywrap.h; sourceTree = "<group>"; };
+		1A3B666221B9547900CE1A8C /* CommonRandom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonRandom.h; sourceTree = "<group>"; };
+		1A3B666321B9547900CE1A8C /* CommonCryptoError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonCryptoError.h; sourceTree = "<group>"; };
+		1A3B666421B9547900CE1A8C /* CommonKeyDerivation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonKeyDerivation.h; sourceTree = "<group>"; };
+		1A3B666521B9547900CE1A8C /* CommonCryptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonCryptor.h; sourceTree = "<group>"; };
+		1A3B666621B9547900CE1A8C /* CommonCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonCrypto.h; sourceTree = "<group>"; };
+		1A3B666721B9547900CE1A8C /* CommonDigest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDigest.h; sourceTree = "<group>"; };
 		1A6C374621B91FF3000BA8EE /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		1A9919D320C8ACA1000B10AE /* ApexApiSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApexApiSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A9919D520C8ACA1000B10AE /* ApexApiSecurity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApexApiSecurity.h; sourceTree = "<group>"; };
@@ -66,6 +74,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A3B665F21B9546F00CE1A8C /* CryptoLib */ = {
+			isa = PBXGroup;
+			children = (
+				1A3B666621B9547900CE1A8C /* CommonCrypto.h */,
+				1A3B666321B9547900CE1A8C /* CommonCryptoError.h */,
+				1A3B666521B9547900CE1A8C /* CommonCryptor.h */,
+				1A3B666721B9547900CE1A8C /* CommonDigest.h */,
+				1A3B666021B9547900CE1A8C /* CommonHMAC.h */,
+				1A3B666421B9547900CE1A8C /* CommonKeyDerivation.h */,
+				1A3B666221B9547900CE1A8C /* CommonRandom.h */,
+				1A3B666121B9547900CE1A8C /* CommonSymmetricKeywrap.h */,
+			);
+			path = CryptoLib;
+			sourceTree = "<group>";
+		};
 		1A9919D420C8ACA1000B10AE /* ApexApiSecurity */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +114,7 @@
 		1AB1DC0320638B3500FB534A = {
 			isa = PBXGroup;
 			children = (
+				1A3B665F21B9546F00CE1A8C /* CryptoLib */,
 				1A6C374621B91FF3000BA8EE /* .travis.yml */,
 				1AC09ED520E7F78F00C2B204 /* LICENSE */,
 				1AC09ED420E7F5E700C2B204 /* .github */,
