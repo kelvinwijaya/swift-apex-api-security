@@ -1,3 +1,7 @@
+[![Platform](https://img.shields.io/badge/Platforms-iOS6.0+-4E4E4E.svg?colorA=28a745)](#installation)
+
+[![Swift support](https://img.shields.io/badge/Swift-4.0+-lightgrey.svg?colorA=28a745&colorB=4E4E4E)](#swift-versions-support)
+
 # APEX API SWIFT Security Utility
 SWIFT helper utility that sign HTTP Authorization Scheme for API authentication
 
