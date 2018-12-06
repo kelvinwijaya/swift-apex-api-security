@@ -37,9 +37,8 @@ struct SecurityUtil {
         
         //Refer to framework bundle
         let bundle = Bundle(identifier: "sg.gov.tech.ApexApiSecurity")
-        let keystorePath = bundle?.path(forResource: "alpha", ofType: "p12", inDirectory: "certificates")
+        let keystorePath = bundle?.path(forResource: p12KeystoreName, ofType: "p12", inDirectory: "certificates")
 
-        
         let keystoreData =  NSData(contentsOfFile: keystorePath!)
         
         if(keystorePath == nil){
@@ -124,7 +123,7 @@ struct SecurityUtil {
         
         // Refer to framework bundle
         let bundle = Bundle(identifier: "sg.gov.tech.ApexApiSecurity")
-        let keystorePath = bundle?.path(forResource: "alpha", ofType: "p12", inDirectory: "certificates")
+        let keystorePath = bundle?.path(forResource: p12KeystoreName, ofType: "p12", inDirectory: "certificates")
         
         
         if(keystorePath == nil){
