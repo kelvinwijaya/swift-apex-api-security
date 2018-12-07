@@ -10,6 +10,7 @@ import Foundation
 import Security
 import CommonCrypto
 
+/// Utility Class for performing APEX API Security operations
 struct SecurityUtil {
     
     private var g_userAgent: String = String("Mozilla/5.0")
@@ -31,6 +32,13 @@ struct SecurityUtil {
         
     }
     
+    /// Function to retrive private key from keystore in p12 format
+    ///
+    /// - Parameters:
+    ///   - p12KeystoreName: keystore filename (Note: No need to put extenstion .p12 in the parameter)
+    ///   - p12Key: keystore password
+    /// - Returns: SecKey Object (Private Key)
+    /// - Throws: Exception (e.g. FileAndPathError)
     func getPrivateKeyFromP12(p12KeystoreName : String, p12Key : String) throws -> SecKey{
         
         debugPrint("p12KeystoreName: " + p12KeystoreName)
@@ -62,7 +70,7 @@ struct SecurityUtil {
         
         if status != errSecSuccess {
             
-            //debugPrint("Cannot sign the device id info: failed importing keystore.")
+            debugPrint("Cannot sign the device id info: failed importing keystore.")
             
             throw  FileAndPathError.NoSuchPath("No such optItems")
         }
@@ -100,10 +108,9 @@ struct SecurityUtil {
         
         if status != errSecSuccess {
             
+            debugPrint("Failed to extract the private key from the keystore.")
             throw  FileAndPathError.NoSuchPath("No such optPrivateKey")
             
-            //debugPrint("Failed to extract the private key from the keystore.")
-            //return privateKey1!
         }
         
         
@@ -119,6 +126,13 @@ struct SecurityUtil {
         
     }
     
+    /// Function to retrieve public certificate from keystore in p12 format
+    ///
+    /// - Parameters:
+    ///   - p12KeystoreName: keystore filename (Note: No need to put extenstion .p12 in the parameter)
+    ///   - p12Key: keystore password
+    /// - Returns: SecCertificate Object (Public Certificate)
+    /// - Throws: Exception (e.g. FileAndPathError)
     func getPublicCertFromP12(p12KeystoreName : String, p12Key : String) throws -> SecCertificate{
         
         // Refer to framework bundle
@@ -135,8 +149,6 @@ struct SecurityUtil {
         
         var status: OSStatus
         
-        //let certificateKey = "passwordkey"
-        
         let options = [kSecImportExportPassphrase as String : p12Key]
         
         
@@ -149,7 +161,7 @@ struct SecurityUtil {
         
         if status != errSecSuccess {
             
-            //debugPrint("Cannot sign the device id info: failed importing keystore.")
+            debugPrint("Cannot sign the device id info: failed importing keystore.")
             
             throw  FileAndPathError.NoSuchPath("No such filename")
         }
@@ -202,6 +214,14 @@ struct SecurityUtil {
         return publicCert
     }
     
+    /// Function to generate APEX L2 Signature
+    ///
+    /// - Parameters:
+    ///   - baseString: Base value used for signature generation
+    ///   - privateKey: Private key object obtain from keystore;
+    ///   - commonDigest: Algorithm used for digest calculation (default: CC_SHA256)
+    /// - Returns: L2 Signature value
+    /// - Throws: Exception
     func getL2Signature(baseString:String, privateKey:SecKey, commonDigest:String) throws -> String? {
         
         //validation
@@ -246,6 +266,14 @@ struct SecurityUtil {
         
     }
     
+    /// Function to generate APEX L1 Signature
+    ///
+    /// - Parameters:
+    ///   - baseString: Base value used for signature generation
+    ///   - secret: Application secret
+    ///   - commonDigest: Algorithm used for digest calculation (default: CC_SHA256)
+    /// - Returns: L1 Signature value
+    /// - Throws: Exception
     func getL1Signature(baseString:String, secret:String, commonDigest:String) throws -> String? {
         
         //validation
@@ -279,13 +307,19 @@ struct SecurityUtil {
         
     }
     
+    /// Function to verify L1 Signature
+    ///
+    /// - Parameters:
+    ///   - signature: APEX L1 Signature value
+    ///   - secret: Application secret
+    ///   - baseString: Base value used for signature generation
+    ///   - commonDigest: Algorithm used for digest calculation (default: CC_SHA256)
+    /// - Returns: Boolean value
+    /// - Throws: Exception
     func verifyL1Signature(signature:String, secret:String, baseString:String, commonDigest:String) throws -> Bool? {
         
         debugPrint("Enter :: verifyL1Signature :: signature : \(signature) , baseString : \(baseString) , commonDigest: \(commonDigest) , secret: \(secret)")
-        //let commonDigest_val:String = "CC_SHA256"
-//        if(commonDigest == .none || commonDigest == "CC_SHA256") {
-//            digestLegth = g_sha256_digestLength;
-//        }
+        
         let expectedSignature = try getL1Signature(baseString: baseString, secret: secret, commonDigest: commonDigest)
         let verified = (expectedSignature == signature)
         
@@ -295,16 +329,21 @@ struct SecurityUtil {
         
     }
     
+    /// Function to verify L2 Signature
+    ///
+    /// - Parameters:
+    ///   - signature: APEX L2 Signature value
+    ///   - publicCert: Application secret
+    ///   - baseString: Base value used for signature generation
+    ///   - commonDigest: Algorithm used for digest calculation (default: CC_SHA256)
+    /// - Returns: Boolean value
+    /// - Throws: Exception
     func verifyL2Signature(signature:String, publicCert:SecCertificate, baseString:String, commonDigest:String) throws -> Bool? {
         debugPrint("Enter :: verifyL2Signature :: signature : \(signature) , baseString : \(baseString) , commonDigest: \(commonDigest)")
         var digestLegth : Int32 = 0
         var verified = false
         let publicKey:SecKey = SecCertificateCopyPublicKey(publicCert)!
-//        let commonDigest_val:String = "CC_SHA256"
-//        let expectedSignature = try getL2Signature(baseString: baseString, privateKey: privateKey, commonDigest: commonDigest_val)
-//        let verified = (expectedSignature == signature)
-        //let signatureData: NSData = signature.data(using: String.Encoding.utf8)! as NSData
-        //let signatureBytes = [UInt8](signatureData as Data)
+        
         if let signatureData = NSData(base64Encoded: signature, options: .ignoreUnknownCharacters){
             let signatureBytes = [UInt8](signatureData as Data)
             
@@ -333,6 +372,9 @@ struct SecurityUtil {
         return verified
     }
     
+    /// <#Description#>
+    ///
+    /// - Returns: <#return value description#>
     func getNewNonce() -> String{
         
         let bytesCount = 8
@@ -347,11 +389,17 @@ struct SecurityUtil {
         
     }
     
+    /// Function to generate new timestamp
+    ///
+    /// - Returns: timestamp in String format
     func getNewTimeStamp() -> String{
         
         return String(currentTimeMilliseconds());
     }
     
+    /// Function to generate new timestamp in milliseoconds
+    ///
+    /// - Returns: timestamp in ms
     func currentTimeMilliseconds() -> Int {
         
         let currentDate = Date()
@@ -362,7 +410,10 @@ struct SecurityUtil {
         
     }
     
-    //MARK: Check if URL has http or Https
+    /// Function to validate http URL
+    ///
+    /// - Parameter strURL: http URL
+    /// - Returns: Boolean value
     func validateURLScheme(strURL:String ) -> Bool{
         
         var b_result = false
@@ -383,7 +434,10 @@ struct SecurityUtil {
     }
     
     
-    //MARK: get absolute URL
+    /// Function to retrieve url encoded http URL
+    ///
+    /// - Parameter strURL: absolute http URL inclusive query parameters
+    /// - Returns: encoded http URL
     func getAbsoluteURL(strURL:String ) -> String{
     
         let encodedUrlString = strURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
@@ -392,14 +446,9 @@ struct SecurityUtil {
         let scheme = components?.scheme
         let host = components?.host
         let path = components?.path
-//        let port = components?.port
         var url:String
         
-//        if(port == nil){
-            url = scheme! + "://" +  host! + path!
-//        } else{
-//            url = scheme! + "://" + host! + ":" + String(describing: port!) + path!
-//        }
+        url = scheme! + "://" +  host! + path!
     
         debugPrint("AbsoluteURL: " + url)
         
@@ -407,8 +456,10 @@ struct SecurityUtil {
    
     }
     
-    
-    //MARK: decode URL
+    /// Function to decode http URL
+    ///
+    /// - Parameter str: http URL
+    /// - Returns: decoded http URL
     func decodeURL(str: String) -> String{
         
         let strWithPlusSign = str.removingPercentEncoding
@@ -420,6 +471,19 @@ struct SecurityUtil {
         //return strWithPlusSign!
     }
     
+    /// Function to generate Base String based on the HTTP headers, formdate, operation and various random variables such as timestamp and nonce
+    ///
+    /// - Parameters:
+    ///   - strAppId: Application ID
+    ///   - strURLNoPortNbr: http URL excluding port number (all APEX api it serve using default https port:443)
+    ///   - strAuthPrefix: Apex Authorization header prefix
+    ///   - strHttpMethod: http operation
+    ///   - strSignatureMethod: 'HMACSHA256' for APEX L1 or 'SHA256withRSA' for APEX L2
+    ///   - strNonce: nonce value
+    ///   - strTimeStamp: timestamp in ms
+    ///   - formList: http form data
+    /// - Returns: Base value used for signature generation
+    /// - Throws: Exception
     func getBaseString(strAppId: String,
                        strURLNoPortNbr: String,
                        strAuthPrefix:String,
@@ -431,9 +495,6 @@ struct SecurityUtil {
         
         debugPrint("Enter :: getBaseString :: strAppId : \(strAppId), strURLNoPortNbr : \(strURLNoPortNbr) , strAuthPrefix: \(strAuthPrefix), strAppId : \(strAppId), strHttpMethod : \(strHttpMethod), strSignatureMethod : \(strSignatureMethod), strNonce : \(strNonce), strTimeStamp : \(strTimeStamp)")
         
-        //var str64BitNbr_nonce = String(get64BitRandomNumber())
-        //var strTimeStamp = String(currentTimeMilliseconds())
-        
         let urlSchemeStatus = validateURLScheme(strURL: strURLNoPortNbr)
         
         if(urlSchemeStatus == false){
@@ -441,8 +502,6 @@ struct SecurityUtil {
         }
         
         let encodedstrURL = strURLNoPortNbr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        //let siteUri = URLComponents(string:encodedstrURL!)
-        //let strAbsoluteURL = String(format:"%@://%@%@", (siteUri?.scheme)!, (siteUri?.host)!, (siteUri?.path)!)
         
         let strAbsoluteURL = getAbsoluteURL(strURL: strURLNoPortNbr)
         
@@ -460,7 +519,6 @@ struct SecurityUtil {
             
         }
         
-        //debugPrint(keyvalues)
         if (!(formList.isEmpty) && formList.count > 0) {
             formList.forEach{
                 (k,v) in keyvalues[k] = v
@@ -490,6 +548,23 @@ struct SecurityUtil {
         
     }
     
+    /// Function to generate APEX Authorization token
+    ///
+    /// - Parameters:
+    ///   - strRealm: Realm value (usually is Apex client domain url)
+    ///   - strAppId: Application id
+    ///   - strSecret: Application secret
+    ///   - strURLNoPortNbr: http url without port number
+    ///   - strAuthPrefix: Apex Authorization header prefix
+    ///   - strHttpMethod: http operation
+    ///   - strNonce: nonce value
+    ///   - strTimeStamp: timestamp in ms
+    ///   - formList: http form data
+    ///   - strPassword: keystore password
+    ///   - strAlias: private key alias
+    ///   - strFileName: keystore filename in .p12 format excluding file extension
+    /// - Returns: Apex Authorization token
+    /// - Throws: Exception
     func getToken(strRealm: String,
                        strAppId: String,
                        strSecret: String?,
@@ -533,23 +608,15 @@ struct SecurityUtil {
         
         var base64Token = ""
         if (strSecret != nil) {
-//            do {
             base64Token = try getL1Signature(baseString: baseString, secret: strSecret!, commonDigest: "CC_SHA256")!
-//            } catch {
-//                print(error)
-//            }
 
         } else {
-//            do{
             let privateKey:SecKey = try getPrivateKeyFromP12(p12KeystoreName: strFileName!, p12Key: strPassword!)
                 base64Token = try getL2Signature(baseString: baseString, privateKey: privateKey, commonDigest: "CC_SHA256")!
-//            } catch {
-//                print(error)
-//            }
+
             
         }
         var keyvalues :[String:String] = [:]
-        //keyvalues["realm"] = strRealm
         keyvalues[authPrefix + "_timestamp"] = timestamp
         keyvalues[authPrefix + "_nonce"] = nonce
         keyvalues[authPrefix + "_app_id"] = strAppId
@@ -559,13 +626,8 @@ struct SecurityUtil {
         
         let sorted = keyvalues.map{$0}.sorted{$0.0.lowercased() < $1.0.lowercased()}
         
-//        let result = sorted.reduce("",
-//                                   {(result,kvp) -> String in
-//                                    result + "&\(kvp.key)=\(kvp.value)"
-//        })
         
         let index = authPrefix.index(authPrefix.startIndex, offsetBy: 1)
-        //let index_kv = sorted.index(sorted.startIndex, offsetBy: 1)
         let tokenValues = sorted.reduce("realm" + "=\"" + strRealm + "\"",
                                    {(result,kvp) -> String in
                                     result + ", " + (kvp.key) + "=\"" + (kvp.value) + "\""
