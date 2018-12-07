@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A9919DC20C8ACA2000B10AE /* ApexApiSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9919D320C8ACA1000B10AE /* ApexApiSecurity.framework */; };
-		1A9919E320C8ACA2000B10AE /* ApexApiSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9919D520C8ACA1000B10AE /* ApexApiSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1A9919EB20C8AD82000B10AE /* SecurityUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9919EA20C8AD82000B10AE /* SecurityUtil.swift */; };
 		1AC09ECC20E7381B00C2B204 /* certificates in Resources */ = {isa = PBXBuildFile; fileRef = 1A09F01520DA2B1000624908 /* certificates */; };
 		1AC09ECE20E7B65400C2B204 /* AuthorizationTokenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC09ECD20E7B65400C2B204 /* AuthorizationTokenTest.swift */; };
@@ -39,7 +38,6 @@
 		1A3B666721B9547900CE1A8C /* CommonDigest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDigest.h; sourceTree = "<group>"; };
 		1A6C374621B91FF3000BA8EE /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		1A9919D320C8ACA1000B10AE /* ApexApiSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApexApiSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A9919D520C8ACA1000B10AE /* ApexApiSecurity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApexApiSecurity.h; sourceTree = "<group>"; };
 		1A9919D620C8ACA1000B10AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A9919DB20C8ACA2000B10AE /* ApexApiSecurityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApexApiSecurityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A9919E220C8ACA2000B10AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 		1A9919D420C8ACA1000B10AE /* ApexApiSecurity */ = {
 			isa = PBXGroup;
 			children = (
-				1A9919D520C8ACA1000B10AE /* ApexApiSecurity.h */,
 				1A9919D620C8ACA1000B10AE /* Info.plist */,
 				1A9919EA20C8AD82000B10AE /* SecurityUtil.swift */,
 			);
@@ -152,7 +149,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A9919E320C8ACA2000B10AE /* ApexApiSecurity.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

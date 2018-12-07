@@ -2,3 +2,4 @@ language: objective-c
 xcode_project: swift-apex-api-security.xcodeproj
 xcode_scheme: ApexApiSecurity
 xcode_destination: platform=iOS Simulator,OS=11.2,name=iPhone 8 Plus
+xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone X
