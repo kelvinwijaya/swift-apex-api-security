@@ -1,6 +1,7 @@
 [![Platform](https://img.shields.io/badge/Platforms-iOS6.0+-4E4E4E.svg?colorA=28a745)](#installation)
 [![Swift support](https://img.shields.io/badge/Swift-4.0+-lightgrey.svg?colorA=28a745&colorB=4E4E4E)](#swift-versions-support)
 [![Build Status](https://travis-ci.com/kelvinwijaya/swift-apex-api-security.svg?branch=master)](https://travis-ci.com/kelvinwijaya/swift-apex-api-security)
+[![codecov](https://codecov.io/gh/kelvinwijaya/swift-apex-api-security/branch/master/graph/badge.svg)](https://codecov.io/gh/kelvinwijaya/swift-apex-api-security)
 
 # APEX API SWIFT Security Utility
 SWIFT helper utility that sign HTTP Authorization Scheme for API authentication
