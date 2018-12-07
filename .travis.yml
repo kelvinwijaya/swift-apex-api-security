@@ -1,4 +1,6 @@
-language: objective-c
+language: swift
 xcode_project: swift-apex-api-security.xcodeproj
 xcode_scheme: ApexApiSecurity
 xcode_destination: platform=iOS Simulator,OS=11.2,name=iPhone 8 Plus
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
