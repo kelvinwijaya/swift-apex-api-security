@@ -299,7 +299,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited), @executable_path/Frameworks, @loader_path/Frameworks, $(PROJECT_DIR)/lib/$(CONFIGURATION)";
 				PRODUCT_BUNDLE_IDENTIFIER = sg.gov.tech.ApexApiSecurity;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -330,7 +330,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited), @executable_path/Frameworks, @loader_path/Frameworks, $(PROJECT_DIR)/lib/$(CONFIGURATION)";
 				PRODUCT_BUNDLE_IDENTIFIER = sg.gov.tech.ApexApiSecurity;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
